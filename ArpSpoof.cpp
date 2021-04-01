@@ -85,7 +85,7 @@ void ArpSpoof::SetArpPacker()
 	sip[3] = 0xc0;
     strcpy((char *)m_arppacket.ArpHead.source_ip_address , (char *)sip);
     strcpy((char *)m_arppacket.ArpHead.source_ethernet_address , (char *)shost);
-        strcpy((char *)m_arppacket.ArpHead.destination_ethernet_address , (char *)dhost);
+    strcpy((char *)m_arppacket.ArpHead.destination_ethernet_address , (char *)dhost);
     strcpy((char *)m_arppacket.ArpHead.destination_ip_address , (char *)dip);
 
 

@@ -63,6 +63,7 @@ void ArpSpoof::SetArpPacker()
 	shost[3] = 0x4B;
 	shost[4] = 0x78;
 	shost[5] = 0xAB;
+
     memcpy(m_arppacket.EtherHead.ether_dhost,dhost,6);
     memcpy(m_arppacket.EtherHead.ether_shost , shost,6);
     m_arppacket.EtherHead.ether_type =htons(0x0806);
@@ -83,6 +84,7 @@ void ArpSpoof::SetArpPacker()
 	sip[1] = 0xc0;
 	sip[2] = 0xc0;
 	sip[3] = 0xc0;
+    
     strcpy((char *)m_arppacket.ArpHead.source_ip_address , (char *)sip);
     strcpy((char *)m_arppacket.ArpHead.source_ethernet_address , (char *)shost);
     strcpy((char *)m_arppacket.ArpHead.destination_ethernet_address , (char *)dhost);

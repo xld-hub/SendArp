@@ -1,7 +1,7 @@
 #ifndef  __TCPPACKETHEAD_H__
 #define   __TCPPACKETHEAD_H__
 
-#include <winsock2.h>
+#include <string.h>
 
 // 以太网协议格式的定义
 typedef struct ether_header {

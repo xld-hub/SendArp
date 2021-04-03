@@ -23,40 +23,45 @@ void ArpSpoof::initDevice()
     }
     else
     {
-        for (pcap_if_t *d = m_alldevices; d; d = d->next)
+        int i = 0;
+        for (pcap_if_t *d = m_alldevices ; d; d = d->next)
         {
             // cout<<d->name;
             if (d->description)
             {
-                cout<<d->description<<endl;
+                cout<<i++<<":"<<d->description<<endl;
             }
             else
             {
-                cout<<"no description"<<endl;
+                cout<<i<<":"<<"no description"<<endl;
                 pcap_freealldevs(m_alldevices);
             }
             
         }
     }
     m_device = m_alldevices;
-    for (size_t i = 0; i < 2; i++)
+    int count;
+    cout<<endl<<"--------choise device-------"<<endl;
+    cin>>count;
+    for (size_t i = 0; i < count; i++)
     {
         m_device = m_device->next;
     }
+    cout<<m_device->description<<endl;
 
 }
 
 void ArpSpoof::SetArpPacker()
 {
     
-	BYTE dhost[8];
+	u_char dhost[8];
     dhost[0] = 0xff;
 	dhost[1] = 0xff;
 	dhost[2] = 0xff;
 	dhost[3] = 0xff;
 	dhost[4] = 0xff;
 	dhost[5] = 0xff;
-    BYTE shost[8];
+    u_char shost[8];
     shost[0] = 0x00;
 	shost[1] = 0x0C;
 	shost[2] = 0x29;
@@ -64,10 +69,10 @@ void ArpSpoof::SetArpPacker()
 	shost[4] = 0x78;
 	shost[5] = 0xAB;
 
-    memcpy(m_arppacket.EtherHead.ether_dhost,dhost,6);
-    memcpy(m_arppacket.EtherHead.ether_shost , shost,6);
+    strcpy((char *)m_arppacket.EtherHead.ether_dhost, (char *)dhost);
+    strcpy((char *)m_arppacket.EtherHead.ether_shost, (char *)shost);
+
     m_arppacket.EtherHead.ether_type =htons(0x0806);
-    
     m_arppacket.ArpHead.hardware_type = htons(0x1);
     m_arppacket.ArpHead.protocol_type = htons(0x0800);
     m_arppacket.ArpHead.hardware_length = 6;
@@ -95,7 +100,7 @@ void ArpSpoof::SetArpPacker()
 
 void ArpSpoof::SendPacket()
 {
-    m_fp = pcap_open(m_device->name,65535,PCAP_OPENFLAG_PROMISCUOUS,1000,NULL,errbuf);
+    m_fp = pcap_open_live(m_device->name,BUFSIZ,PCAP_OPENFLAG_PROMISCUOUS,1000,errbuf);
     u_char *packet;
     int ret = pcap_sendpacket(m_fp,(const u_char *)&m_arppacket,sizeof(m_arppacket));
     if (ret == 0)

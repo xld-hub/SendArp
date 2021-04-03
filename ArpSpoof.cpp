@@ -111,11 +111,9 @@ void ArpSpoof::SetArpPacker()
 	// sip[2] = 0xcc;
 	// sip[3] = 0x82;
 
-
     memcpy(m_arppacket.ArpHead.destination_ethernet_address,dhost,6);
     memcpy(m_arppacket.ArpHead.source_ip_address,geteway,4);
     
-
     memcpy(m_arppacket.ArpHead.source_ethernet_address,shost,6);
     memcpy(m_arppacket.ArpHead.destination_ip_address,dip,4);
 

@@ -1,9 +1,11 @@
 #ifndef  __ARPSPOOFHEAD_H__
 #define   __ARPSPOOFHEAD_H__
 
-#include <pcap.h>
-#include "Head.h"
 
+#include "StrToHex.h"
+#include "Head.h"
+#include <pcap.h>
+#include <iostream>
 
 struct ArpPacket
 {
